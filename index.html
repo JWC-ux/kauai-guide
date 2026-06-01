@@ -2,25 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Kauai's Best | Curated by Reviews</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --ocean: #0E4D64;
+            --ocean-light: #1A7A8D;
             --sand: #F5F0E6;
             --coral: #E07A5F;
+            --coral-dark: #C45A3F;
             --palm: #2D6A4F;
             --gold: #D4A373;
             --text: #2B2D42;
+            --text-light: #555;
             --light: #FFFFFF;
             --shadow: rgba(0,0,0,0.08);
+            --shadow-heavy: rgba(0,0,0,0.12);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
         }
 
         body {
@@ -28,13 +38,14 @@
             background: var(--sand);
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         /* Hero */
         .hero {
-            background: linear-gradient(135deg, var(--ocean) 0%, #1A7A8D 100%);
+            background: linear-gradient(135deg, var(--ocean) 0%, var(--ocean-light) 100%);
             color: var(--light);
-            padding: 6rem 2rem 4rem;
+            padding: 5rem 1.5rem 3.5rem;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -47,37 +58,39 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            opacity: 0.3;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.4;
         }
 
         .hero h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
+            font-size: clamp(2rem, 6vw, 3.5rem);
             margin-bottom: 0.5rem;
             position: relative;
+            line-height: 1.2;
         }
 
         .hero p {
-            font-size: 1.25rem;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
             opacity: 0.9;
             max-width: 600px;
             margin: 0 auto;
             position: relative;
+            padding: 0 1rem;
         }
 
         .hero .sub {
-            margin-top: 1rem;
-            font-size: 0.95rem;
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
             opacity: 0.75;
             font-weight: 300;
         }
 
-        /* Tip Button */
+        /* Tip Bar */
         .tip-bar {
             background: var(--light);
-            padding: 1rem;
+            padding: 0.75rem 1rem;
             text-align: center;
             box-shadow: 0 2px 20px var(--shadow);
             position: sticky;
@@ -91,22 +104,26 @@
             gap: 0.5rem;
             background: var(--coral);
             color: white;
-            padding: 0.75rem 2rem;
+            padding: 0.65rem 1.75rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 0.95rem;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
             box-shadow: 0 4px 15px rgba(224, 122, 95, 0.3);
+            min-height: 44px;
         }
 
-        .tip-btn:hover {
+        .tip-btn:hover, .tip-btn:active {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(224, 122, 95, 0.4);
+            background: var(--coral-dark);
         }
 
         .tip-btn svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
         }
 
         /* Filters */
@@ -114,20 +131,28 @@
             display: flex;
             justify-content: center;
             gap: 0.5rem;
-            padding: 2rem;
+            padding: 1.25rem 1rem;
             flex-wrap: wrap;
+            background: var(--sand);
+            position: sticky;
+            top: 56px;
+            z-index: 90;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
 
         .filter-btn {
-            padding: 0.6rem 1.5rem;
+            padding: 0.55rem 1.25rem;
             border: 2px solid var(--ocean);
             background: transparent;
             color: var(--ocean);
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s;
+            transition: all 0.25s;
             font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            min-height: 44px;
+            touch-action: manipulation;
         }
 
         .filter-btn:hover, .filter-btn.active {
@@ -135,16 +160,16 @@
             color: white;
         }
 
-        /* Grid */
+        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem 4rem;
+            padding: 0 1rem 3rem;
         }
 
         .city-section {
             display: none;
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.4s ease;
         }
 
         .city-section.active {
@@ -152,7 +177,7 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -160,27 +185,43 @@
             display: flex;
             align-items: baseline;
             justify-content: space-between;
-            margin: 3rem 0 1.5rem;
-            padding-bottom: 1rem;
+            margin: 2.5rem 0 1.25rem;
+            padding-bottom: 0.75rem;
             border-bottom: 3px solid var(--gold);
+            flex-wrap: wrap;
+            gap: 0.25rem;
         }
 
         .city-header h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
             color: var(--ocean);
         }
 
         .city-header .rating {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--coral);
             font-weight: 600;
+            white-space: nowrap;
         }
 
+        /* Grid */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (min-width: 640px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .card {
@@ -188,40 +229,44 @@
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 4px 20px var(--shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.25s, box-shadow 0.25s;
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px var(--shadow-heavy);
         }
 
         .card-badge {
             display: inline-block;
-            padding: 0.3rem 1rem;
-            font-size: 0.75rem;
+            padding: 0.25rem 0.9rem;
+            font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            border-radius: 20px;
+            margin-bottom: 0.5rem;
+            align-self: flex-start;
         }
 
         .badge-food { background: #FFF3E0; color: #E65100; }
-        .badge-activity { background: #E8F5E9; color: #2E7D32; }
+        .badge-activity { background: #E8F5E9; color: #1B5E20; }
 
         .card-image {
-            height: 180px;
-            background: linear-gradient(45deg, #ddd, #eee);
+            height: 160px;
+            background: linear-gradient(45deg, #e0e0e0, #f0f0f0);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 2.5rem;
             position: relative;
         }
 
         .card-body {
-            padding: 1.5rem;
+            padding: 1.25rem;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -229,57 +274,90 @@
 
         .card-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.15rem;
+            margin-bottom: 0.4rem;
             color: var(--text);
+            line-height: 1.3;
         }
 
         .stars {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
+            gap: 0.4rem;
+            margin-bottom: 0.6rem;
+            flex-wrap: wrap;
         }
 
         .star-rating {
             color: var(--gold);
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .star-count {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #888;
         }
 
         .card-desc {
-            font-size: 0.95rem;
-            color: #555;
+            font-size: 0.9rem;
+            color: var(--text-light);
             line-height: 1.5;
             flex: 1;
+            margin-bottom: 0.75rem;
+        }
+
+        .address {
+            display: inline-flex;
+            align-items: flex-start;
+            gap: 0.4rem;
+            font-size: 0.82rem;
+            color: var(--ocean);
+            text-decoration: none;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+            word-break: break-word;
+            padding: 0.35rem 0.5rem;
+            background: #f0f7fa;
+            border-radius: 8px;
+            transition: background 0.2s;
+            border: 1px solid #d0e8f0;
+        }
+
+        .address:hover {
+            background: #e0f0f5;
+        }
+
+        .address svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
         }
 
         .card-footer {
-            margin-top: 1rem;
-            padding-top: 1rem;
+            padding-top: 0.75rem;
             border-top: 1px solid #eee;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .tag {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             background: var(--sand);
-            padding: 0.2rem 0.7rem;
+            padding: 0.25rem 0.7rem;
             border-radius: 20px;
             color: var(--text);
+            font-weight: 500;
         }
 
         .price {
             font-size: 0.85rem;
             color: var(--palm);
-            font-weight: 600;
+            font-weight: 700;
         }
 
         /* Footer */
@@ -287,11 +365,11 @@
             background: var(--ocean);
             color: white;
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 2.5rem 1.5rem;
         }
 
         footer p {
-            opacity: 0.8;
+            opacity: 0.85;
             font-size: 0.9rem;
         }
 
@@ -299,19 +377,48 @@
             color: var(--coral);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .cards-grid { grid-template-columns: 1fr; }
-            .city-header { flex-direction: column; gap: 0.5rem; }
+        /* Utilities */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            border: 0;
+        }
+
+        /* Mobile specific */
+        @media (max-width: 639px) {
+            .hero {
+                padding: 3.5rem 1rem 2.5rem;
+            }
+            .filters {
+                top: 52px;
+                padding: 0.75rem 0.5rem;
+            }
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+            .container {
+                padding: 0 0.75rem 2rem;
+            }
+            .city-header {
+                margin: 2rem 0 1rem;
+            }
+            .card-image {
+                height: 140px;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="tip-bar">
-        <a href="https://ko-fi.com/YOUR_USERNAME" target="_blank" class="tip-btn">
-            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/></svg>
+        <a href="https://ko-fi.com/YOUR_USERNAME" target="_blank" rel="noopener noreferrer" class="tip-btn" aria-label="Support this guide with a tip">
+            <svg fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/></svg>
             Say Mahalo with a Tip
         </a>
     </div>
@@ -322,14 +429,14 @@
         <p class="sub">Aggregated from Google & Yelp • Updated 2026</p>
     </header>
 
-    <div class="filters">
-        <button class="filter-btn active" onclick="showCity('all')">All Islands</button>
-        <button class="filter-btn" onclick="showCity('hanalei')">Hanalei</button>
-        <button class="filter-btn" onclick="showCity('princeville')">Princeville</button>
-        <button class="filter-btn" onclick="showCity('kapaa')">Kapa'a</button>
-        <button class="filter-btn" onclick="showCity('lihue')">Lihue</button>
-        <button class="filter-btn" onclick="showCity('poipu')">Poipu / Koloa</button>
-        <button class="filter-btn" onclick="showCity('waimea')">Waimea</button>
+    <div class="filters" role="tablist" aria-label="Filter by city">
+        <button class="filter-btn active" onclick="showCity('all')" role="tab" aria-selected="true">All Islands</button>
+        <button class="filter-btn" onclick="showCity('hanalei')" role="tab" aria-selected="false">Hanalei</button>
+        <button class="filter-btn" onclick="showCity('princeville')" role="tab" aria-selected="false">Princeville</button>
+        <button class="filter-btn" onclick="showCity('kapaa')" role="tab" aria-selected="false">Kapa'a</button>
+        <button class="filter-btn" onclick="showCity('lihue')" role="tab" aria-selected="false">Lihue</button>
+        <button class="filter-btn" onclick="showCity('poipu')" role="tab" aria-selected="false">Poipu / Koloa</button>
+        <button class="filter-btn" onclick="showCity('waimea')" role="tab" aria-selected="false">Waimea</button>
     </div>
 
     <main class="container">
@@ -342,7 +449,7 @@
             </div>
             <div class="cards-grid">
                 <div class="card">
-                    <div class="card-image">🍜</div>
+                    <div class="card-image" role="img" aria-label="Ramen bowl">🍜</div>
                     <div class="card-body">
                         <span class="card-badge badge-food">Food</span>
                         <h3 class="card-title">Ama Restaurant</h3>
@@ -350,7 +457,11 @@
                             <span class="star-rating">★ 4.4</span>
                             <span class="star-count">(276 reviews)</span>
                         </div>
-                        <p class="card-desc">Artisan ramen and Asian fusion in a laid-back Hanalei setting. The fire pits and grassy lawn make it perfect for families and date nights alike.</p>
+                        <p class="card-desc">Artisan ramen and Asian fusion in a laid-back Hanalei setting. Fire pits and a grassy lawn make it perfect for families and date nights.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=4-369+Kuhio+Hwy,+Hanalei,+HI+96714" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            4-369 Kuhio Hwy, Hanalei, HI 96714
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Ramen • Cocktails</span>
                             <span class="price">$$</span>
@@ -358,7 +469,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🍤</div>
+                    <div class="card-image" role="img" aria-label="Tapas plate">🍤</div>
                     <div class="card-body">
                         <span class="card-badge badge-food">Food</span>
                         <h3 class="card-title">Bar Acuda</h3>
@@ -367,6 +478,10 @@
                             <span class="star-count">(1,922 reviews)</span>
                         </div>
                         <p class="card-desc">Upscale tapas and fresh-caught fish in a chic Hanalei atmosphere. The go-to splurge spot on the North Shore—reservations strongly recommended.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=5-5161+Kuhio+Hwy,+Hanalei,+HI+96714" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            5-5161 Kuhio Hwy, Hanalei, HI 96714
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Tapas • Wine</span>
                             <span class="price">$$$</span>
@@ -374,7 +489,47 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🏖️</div>
+                    <div class="card-image" role="img" aria-label="Bread loaf">🥖</div>
+                    <div class="card-body">
+                        <span class="card-badge badge-food">Food</span>
+                        <h3 class="card-title">Hanalei Bread Company</h3>
+                        <div class="stars">
+                            <span class="star-rating">★ 4.5</span>
+                            <span class="star-count">(890 reviews)</span>
+                        </div>
+                        <p class="card-desc">Organic sourdough, fresh pastries, and excellent espresso. A must-stop breakfast spot before heading to the beach. Try the breakfast sandwich.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=5-5161+Kuhio+Hwy,+Hanalei,+HI+96714" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            5-5161 Kuhio Hwy, Hanalei, HI 96714
+                        </a>
+                        <div class="card-footer">
+                            <span class="tag">Bakery • Coffee</span>
+                            <span class="price">$</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" role="img" aria-label="Taco">🌮</div>
+                    <div class="card-body">
+                        <span class="card-badge badge-food">Food</span>
+                        <h3 class="card-title">Tropical Taco</h3>
+                        <div class="stars">
+                            <span class="star-rating">★ 4.3</span>
+                            <span class="star-count">(1,150 reviews)</span>
+                        </div>
+                        <p class="card-desc">Casual fish tacos and burritos with a funky surf-shack vibe. Huge portions and a legendary hot sauce bar keep locals coming back.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=5-5088+Kuhio+Hwy,+Hanalei,+HI+96714" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            5-5088 Kuhio Hwy, Hanalei, HI 96714
+                        </a>
+                        <div class="card-footer">
+                            <span class="tag">Tacos • Casual</span>
+                            <span class="price">$</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" role="img" aria-label="Beach">🏖️</div>
                     <div class="card-body">
                         <span class="card-badge badge-activity">Activity</span>
                         <h3 class="card-title">Tunnels Beach (Mākua)</h3>
@@ -383,6 +538,10 @@
                             <span class="star-count">(2,100+ reviews)</span>
                         </div>
                         <p class="card-desc">World-class snorkeling and scuba with an underwater lava tube system. Sea turtles, reef sharks, and vibrant coral in crystal-clear water.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Makua+Beach,+Haena,+HI+96714" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Mākua Beach, Haena, HI 96714
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Snorkeling • Beach</span>
                             <span class="price">Free</span>
@@ -390,7 +549,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🌊</div>
+                    <div class="card-image" role="img" aria-label="Ocean waves">🌊</div>
                     <div class="card-body">
                         <span class="card-badge badge-activity">Activity</span>
                         <h3 class="card-title">Hanalei Bay</h3>
@@ -399,6 +558,10 @@
                             <span class="star-count">(3,400+ reviews)</span>
                         </div>
                         <p class="card-desc">A two-mile crescent of pristine sand backed by waterfalls and mountains. Surf lessons in summer, serene sunsets year-round.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Hanalei+Bay,+Hanalei,+HI+96714" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Hanalei, HI 96714
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Surf • Sunset</span>
                             <span class="price">Free</span>
@@ -416,7 +579,7 @@
             </div>
             <div class="cards-grid">
                 <div class="card">
-                    <div class="card-image">🥩</div>
+                    <div class="card-image" role="img" aria-label="Steak">🥩</div>
                     <div class="card-body">
                         <span class="card-badge badge-food">Food</span>
                         <h3 class="card-title">Kauai Grill</h3>
@@ -425,6 +588,10 @@
                             <span class="star-count">(890 reviews)</span>
                         </div>
                         <p class="card-desc">Romantic steakhouse inside the St. Regis with sweeping Hanalei Bay views. Dry-aged steaks and Hawaiian seafood with a fine-dining touch.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=5520+Ka+Haku+Rd,+Princeville,+HI+96722" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            5520 Ka Haku Rd, Princeville, HI 96722
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Steak • Views</span>
                             <span class="price">$$$</span>
@@ -432,7 +599,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🍣</div>
+                    <div class="card-image" role="img" aria-label="Seafood platter">🍣</div>
                     <div class="card-body">
                         <span class="card-badge badge-food">Food</span>
                         <h3 class="card-title">Makana Terrace</h3>
@@ -441,6 +608,10 @@
                             <span class="star-count">(650 reviews)</span>
                         </div>
                         <p class="card-desc">Inventive seafood and breakfast buffets overlooking the cliffs. The terrace seating at sunrise is one of the most photographed meals on Kauai.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=5520+Ka+Haku+Rd,+Princeville,+HI+96722" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            5520 Ka Haku Rd, Princeville, HI 96722
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Seafood • Breakfast</span>
                             <span class="price">$$$</span>
@@ -448,7 +619,47 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🌿</div>
+                    <div class="card-image" role="img" aria-label="Fine dining">🍽️</div>
+                    <div class="card-body">
+                        <span class="card-badge badge-food">Food</span>
+                        <h3 class="card-title">Nanea Restaurant</h3>
+                        <div class="stars">
+                            <span class="star-rating">★ 4.4</span>
+                            <span class="star-count">(540 reviews)</span>
+                        </div>
+                        <p class="card-desc">Farm-to-table Hawaiian cuisine at the Westin Princeville. Features locally sourced ingredients and an extensive wine list in an elegant open-air setting.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=5520+Ka+Haku+Rd,+Princeville,+HI+96722" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            5520 Ka Haku Rd, Princeville, HI 96722
+                        </a>
+                        <div class="card-footer">
+                            <span class="tag">Hawaiian • Fine Dining</span>
+                            <span class="price">$$$</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" role="img" aria-label="Cocktail">🍹</div>
+                    <div class="card-body">
+                        <span class="card-badge badge-food">Food</span>
+                        <h3 class="card-title">Happy Talk Lounge</h3>
+                        <div class="stars">
+                            <span class="star-rating">★ 4.2</span>
+                            <span class="star-count">(480 reviews)</span>
+                        </div>
+                        <p class="card-desc">Relaxed poolside lounge with live music, tropical cocktails, and a pupu menu. The sunset views over Hanalei Bay are unbeatable.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=5520+Ka+Haku+Rd,+Princeville,+HI+96722" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            5520 Ka Haku Rd, Princeville, HI 96722
+                        </a>
+                        <div class="card-footer">
+                            <span class="tag">Lounge • Live Music</span>
+                            <span class="price">$$</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" role="img" aria-label="Botanical garden">🌿</div>
                     <div class="card-body">
                         <span class="card-badge badge-activity">Activity</span>
                         <h3 class="card-title">Princeville Botanical Gardens</h3>
@@ -457,6 +668,10 @@
                             <span class="star-count">(1,100+ reviews)</span>
                         </div>
                         <p class="card-desc">A guided tour through rare tropical flora with chocolate and honey tastings. Consistently rated one of the top attractions in all of Hawaii.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=3841+Wailapa+Rd,+Kilauea,+HI+96754" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            3841 Wailapa Rd, Kilauea, HI 96754
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Tour • Tasting</span>
                             <span class="price">$65</span>
@@ -464,7 +679,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">⛳</div>
+                    <div class="card-image" role="img" aria-label="Golf course">⛳</div>
                     <div class="card-body">
                         <span class="card-badge badge-activity">Activity</span>
                         <h3 class="card-title">Makai Golf Club</h3>
@@ -473,6 +688,10 @@
                             <span class="star-count">(780 reviews)</span>
                         </div>
                         <p class="card-desc">Oceanfront holes with dramatic cliff views and sunset tee times. One of the most scenic public courses in the Pacific.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=4080+Aloalii+Dr,+Princeville,+HI+96722" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            4080 Aloalii Dr, Princeville, HI 96722
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Golf • Ocean Views</span>
                             <span class="price">$$$</span>
@@ -490,7 +709,7 @@
             </div>
             <div class="cards-grid">
                 <div class="card">
-                    <div class="card-image">🍱</div>
+                    <div class="card-image" role="img" aria-label="Plate lunch">🍱</div>
                     <div class="card-body">
                         <span class="card-badge badge-food">Food</span>
                         <h3 class="card-title">Pono Market</h3>
@@ -499,6 +718,10 @@
                             <span class="star-count">(1,400+ reviews)</span>
                         </div>
                         <p class="card-desc">The ultimate local Hawaiian plate lunch. Kalua pork, chicken lau lau, spicy ahi poke, and lomi salmon served deli-style. Closed weekends—arrive early.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=4-1300+Kuhio+Hwy,+Kapaa,+HI+96746" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            4-1300 Kuhio Hwy, Kapa'a, HI 96746
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Plate Lunch • Poke</span>
                             <span class="price">$</span>
@@ -506,7 +729,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🍧</div>
+                    <div class="card-image" role="img" aria-label="Shave ice">🍧</div>
                     <div class="card-body">
                         <span class="card-badge badge-food">Food</span>
                         <h3 class="card-title">Wailua Shave Ice</h3>
@@ -515,6 +738,10 @@
                             <span class="star-count">(920 reviews)</span>
                         </div>
                         <p class="card-desc">Next-level shave ice with real fruit purees and house-made haupia foam. Try the Lava Flow or Almond Joy with ice cream center.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=4-1306+Kuhio+Hwy,+Kapaa,+HI+96746" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            4-1306 Kuhio Hwy, Kapa'a, HI 96746
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Shave Ice • Smoothies</span>
                             <span class="price">$</span>
@@ -522,7 +749,47 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🛶</div>
+                    <div class="card-image" role="img" aria-label="Burger">🍔</div>
+                    <div class="card-body">
+                        <span class="card-badge badge-food">Food</span>
+                        <h3 class="card-title">The Local</h3>
+                        <div class="stars">
+                            <span class="star-rating">★ 4.5</span>
+                            <span class="star-count">(1,100 reviews)</span>
+                        </div>
+                        <p class="card-desc">Gourmet burgers and craft beer in a laid-back gastropub setting. Locally sourced beef and creative toppings make this a Kapa'a favorite.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=4-1380+Kuhio+Hwy,+Kapaa,+HI+96746" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            4-1380 Kuhio Hwy, Kapa'a, HI 96746
+                        </a>
+                        <div class="card-footer">
+                            <span class="tag">Burgers • Craft Beer</span>
+                            <span class="price">$$</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" role="img" aria-label="Pancakes">🥞</div>
+                    <div class="card-body">
+                        <span class="card-badge badge-food">Food</span>
+                        <h3 class="card-title">Kountry Kitchen</h3>
+                        <div class="stars">
+                            <span class="star-rating">★ 4.4</span>
+                            <span class="star-count">(1,600 reviews)</span>
+                        </div>
+                        <p class="card-desc">Hearty American breakfast with a Hawaiian twist. Famous for fluffy pancakes, loco moco, and friendly service. Expect a wait on weekends.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=4-1485+Kuhio+Hwy,+Kapaa,+HI+96746" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            4-1485 Kuhio Hwy, Kapa'a, HI 96746
+                        </a>
+                        <div class="card-footer">
+                            <span class="tag">Breakfast • Diner</span>
+                            <span class="price">$</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" role="img" aria-label="Kayak">🛶</div>
                     <div class="card-body">
                         <span class="card-badge badge-activity">Activity</span>
                         <h3 class="card-title">Wailua River Kayak to Secret Falls</h3>
@@ -531,6 +798,10 @@
                             <span class="star-count">(3,200+ reviews)</span>
                         </div>
                         <p class="card-desc">Paddle Hawaii's only navigable river through movie-set scenery, then hike 0.75 miles to the 120-ft Uluwehi Falls. Family-friendly but adventurous.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Wailua+River,+Kapaa,+HI+96746" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Wailua River, Kapa'a, HI 96746
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Kayak • Hike • Waterfall</span>
                             <span class="price">$85+</span>
@@ -538,15 +809,19 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🚴</div>
+                    <div class="card-image" role="img" aria-label="Bicycle">🚴</div>
                     <div class="card-body">
                         <span class="card-badge badge-activity">Activity</span>
-                        <h3 class="card-title">Ke Ala Hele Makalae (Coastal Path)</h3>
+                        <h3 class="card-title">Ke Ala Hele Makalae</h3>
                         <div class="stars">
                             <span class="star-rating">★ 4.7</span>
                             <span class="star-count">(1,800+ reviews)</span>
                         </div>
                         <p class="card-desc">An 8-mile paved oceanfront bike path with lava-rock coves, cliff views, and beach access. Rent cruisers in Kapa'a town for the perfect morning ride.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Ke+Ala+Hele+Makalae,+Kapaa,+HI+96746" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Kapa'a, HI 96746
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Bike • Scenic • Free</span>
                             <span class="price">Free</span>
@@ -564,7 +839,7 @@
             </div>
             <div class="cards-grid">
                 <div class="card">
-                    <div class="card-image">🍰</div>
+                    <div class="card-image" role="img" aria-label="Hula pie">🍰</div>
                     <div class="card-body">
                         <span class="card-badge badge-food">Food</span>
                         <h3 class="card-title">Duke's Kauai</h3>
@@ -573,6 +848,10 @@
                             <span class="star-count">(4,100+ reviews)</span>
                         </div>
                         <p class="card-desc">Beachfront Hawaiian dining at Kalapaki Bay. Famous for Hula Pie, fresh fish, and barefoot-friendly service with live music nightly.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=3610+Rice+St,+Lihue,+HI+96766" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            3610 Rice St, Lihue, HI 96766
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Hawaiian • Beachfront</span>
                             <span class="price">$$</span>
@@ -580,7 +859,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🍜</div>
+                    <div class="card-image" role="img" aria-label="Noodle bowl">🍜</div>
                     <div class="card-body">
                         <span class="card-badge badge-food">Food</span>
                         <h3 class="card-title">Hamura Saimin</h3>
@@ -589,6 +868,10 @@
                             <span class="star-count">(2,300+ reviews)</span>
                         </div>
                         <p class="card-desc">A Kauai institution since 1952. Classic saimin noodles, teri beef sticks, and lilikoi chiffon pie in a no-frills local diner setting.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=2956+Kress+St,+Lihue,+HI+96766" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            2956 Kress St, Lihue, HI 96766
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Saimin • Local Legend</span>
                             <span class="price">$</span>
@@ -596,7 +879,47 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🏄</div>
+                    <div class="card-image" role="img" aria-label="Bento box">🍱</div>
+                    <div class="card-body">
+                        <span class="card-badge badge-food">Food</span>
+                        <h3 class="card-title">Mark's Place</h3>
+                        <div class="stars">
+                            <span class="star-rating">★ 4.5</span>
+                            <span class="star-count">(1,800 reviews)</span>
+                        </div>
+                        <p class="card-desc">Local-style plate lunches and bentos with generous portions. A favorite among airport workers and locals for quick, delicious comfort food.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=1610+Haleukana+St,+Lihue,+HI+96766" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            1610 Haleukana St, Lihue, HI 96766
+                        </a>
+                        <div class="card-footer">
+                            <span class="tag">Plate Lunch • Local</span>
+                            <span class="price">$</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" role="img" aria-label="Beer flight">🍺</div>
+                    <div class="card-body">
+                        <span class="card-badge badge-food">Food</span>
+                        <h3 class="card-title">Kauai Beer Company</h3>
+                        <div class="stars">
+                            <span class="star-rating">★ 4.4</span>
+                            <span class="star-count">(1,200 reviews)</span>
+                        </div>
+                        <p class="card-desc">Craft brewery with a rotating tap list and elevated pub grub. The outdoor seating and live music make it a great evening hangout.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=2470+Puhi+St,+Lihue,+HI+96766" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            2470 Puhi St, Lihue, HI 96766
+                        </a>
+                        <div class="card-footer">
+                            <span class="tag">Brewery • Pub Food</span>
+                            <span class="price">$$</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" role="img" aria-label="Surfboard">🏄</div>
                     <div class="card-body">
                         <span class="card-badge badge-activity">Activity</span>
                         <h3 class="card-title">Kalapaki Beach</h3>
@@ -605,6 +928,10 @@
                             <span class="star-count">(1,500+ reviews)</span>
                         </div>
                         <p class="card-desc">Gentle, beginner-friendly surf and stand-up paddleboarding in a protected bay. Board rentals and lessons right on the sand.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Kalapaki+Beach,+Lihue,+HI+96766" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            3610 Rice St, Lihue, HI 96766
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Surf • SUP • Swim</span>
                             <span class="price">Free</span>
@@ -612,7 +939,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🛤️</div>
+                    <div class="card-image" role="img" aria-label="Tubing">🛤️</div>
                     <div class="card-body">
                         <span class="card-badge badge-activity">Activity</span>
                         <h3 class="card-title">Kauai Backcountry Tubing</h3>
@@ -621,6 +948,10 @@
                             <span class="star-count">(2,100+ reviews)</span>
                         </div>
                         <p class="card-desc">Float down historic irrigation canals through lush jungle and tunnel systems. A unique, mellow adventure perfect for all ages.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=3-4131+Kuhio+Hwy,+Lihue,+HI+96766" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            3-4131 Kuhio Hwy, Lihue, HI 96766
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Tubing • Jungle</span>
                             <span class="price">$140</span>
@@ -638,7 +969,7 @@
             </div>
             <div class="cards-grid">
                 <div class="card">
-                    <div class="card-image">🦞</div>
+                    <div class="card-image" role="img" aria-label="Lobster">🦞</div>
                     <div class="card-body">
                         <span class="card-badge badge-food">Food</span>
                         <h3 class="card-title">Beach House Restaurant</h3>
@@ -647,6 +978,10 @@
                             <span class="star-count">(6,509 reviews)</span>
                         </div>
                         <p class="card-desc">Iconic oceanfront dining on the south shore. Hale 'Aina award winner for 20+ years. Book a sunset table for the full experience.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=5022+Lawai+Rd,+Koloa,+HI+96756" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            5022 Lawai Rd, Koloa, HI 96756
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Seafood • Sunset</span>
                             <span class="price">$$$</span>
@@ -654,7 +989,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🍹</div>
+                    <div class="card-image" role="img" aria-label="Cocktail">🍹</div>
                     <div class="card-body">
                         <span class="card-badge badge-food">Food</span>
                         <h3 class="card-title">Keoki's Paradise</h3>
@@ -663,6 +998,10 @@
                             <span class="star-count">(6,096 reviews)</span>
                         </div>
                         <p class="card-desc">Tropical open-air dining with waterfalls, live music, and a menu built around local fishermen and ranchers. Strong island vibe.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=2360+Kiahuna+Plantation+Dr,+Koloa,+HI+96756" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            2360 Kiahuna Plantation Dr, Koloa, HI 96756
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Hawaiian • Live Music</span>
                             <span class="price">$$</span>
@@ -670,7 +1009,47 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🤿</div>
+                    <div class="card-image" role="img" aria-label="Fish dish">🐟</div>
+                    <div class="card-body">
+                        <span class="card-badge badge-food">Food</span>
+                        <h3 class="card-title">Merriman's Fish House</h3>
+                        <div class="stars">
+                            <span class="star-rating">★ 4.4</span>
+                            <span class="star-count">(2,400 reviews)</span>
+                        </div>
+                        <p class="card-desc">Farm-to-table pioneer Peter Merriman's flagship. Exceptional Hawaiian regional cuisine with a focus on sustainable seafood and local produce.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=2829+Ala+Kalanikaumaka+St,+Koloa,+HI+96756" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            2829 Ala Kalanikaumaka St, Koloa, HI 96756
+                        </a>
+                        <div class="card-footer">
+                            <span class="tag">Hawaiian • Fine Dining</span>
+                            <span class="price">$$$</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" role="img" aria-label="Breakfast">🍳</div>
+                    <div class="card-body">
+                        <span class="card-badge badge-food">Food</span>
+                        <h3 class="card-title">Anuenue Cafe</h3>
+                        <div class="stars">
+                            <span class="star-rating">★ 4.3</span>
+                            <span class="star-count">(890 reviews)</span>
+                        </div>
+                        <p class="card-desc">Bright, airy cafe inside Kiahuna Plantation serving acai bowls, eggs Benedict, and tropical pancakes. Great coffee and quick, friendly service.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=2360+Kiahuna+Plantation+Dr,+Koloa,+HI+96756" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            2360 Kiahuna Plantation Dr, Koloa, HI 96756
+                        </a>
+                        <div class="card-footer">
+                            <span class="tag">Breakfast • Cafe</span>
+                            <span class="price">$$</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" role="img" aria-label="Snorkel">🤿</div>
                     <div class="card-body">
                         <span class="card-badge badge-activity">Activity</span>
                         <h3 class="card-title">Poipu Beach</h3>
@@ -679,6 +1058,10 @@
                             <span class="star-count">(4,500+ reviews)</span>
                         </div>
                         <p class="card-desc">A family-friendly crescent with a natural wading pool for kids, excellent snorkeling, and frequent Hawaiian monk seal sightings.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=2100+Hoone+Rd,+Koloa,+HI+96756" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            2100 Hoone Rd, Koloa, HI 96756
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Snorkel • Family • Seals</span>
                             <span class="price">Free</span>
@@ -686,7 +1069,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🌬️</div>
+                    <div class="card-image" role="img" aria-label="Blowhole">🌬️</div>
                     <div class="card-body">
                         <span class="card-badge badge-activity">Activity</span>
                         <h3 class="card-title">Spouting Horn</h3>
@@ -695,6 +1078,10 @@
                             <span class="star-count">(3,800+ reviews)</span>
                         </div>
                         <p class="card-desc">A dramatic saltwater blowhole that shoots plumes skyward at high tide. Adjacent park with local craft vendors and sunset views.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Spouting+Horn,+Lawai+Rd,+Koloa,+HI+96756" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Lawai Rd, Koloa, HI 96756
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Blowhole • Sunset</span>
                             <span class="price">Free</span>
@@ -712,7 +1099,7 @@
             </div>
             <div class="cards-grid">
                 <div class="card">
-                    <div class="card-image">🍳</div>
+                    <div class="card-image" role="img" aria-label="Loco moco">🍳</div>
                     <div class="card-body">
                         <span class="card-badge badge-food">Food</span>
                         <h3 class="card-title">Da Booze Shop</h3>
@@ -721,6 +1108,10 @@
                             <span class="star-count">(850 reviews)</span>
                         </div>
                         <p class="card-desc">Local plate-lunch legend with massive portions. Home of one of the best loco mocos in Hawaii. Family-owned with a story behind every meal.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=9643+Kaumualii+Hwy,+Waimea,+HI+96796" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            9643 Kaumualii Hwy, Waimea, HI 96796
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Loco Moco • Plate Lunch</span>
                             <span class="price">$</span>
@@ -728,7 +1119,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🌮</div>
+                    <div class="card-image" role="img" aria-label="Fish taco">🌮</div>
                     <div class="card-body">
                         <span class="card-badge badge-food">Food</span>
                         <h3 class="card-title">Island Taco</h3>
@@ -737,6 +1128,10 @@
                             <span class="star-count">(720 reviews)</span>
                         </div>
                         <p class="card-desc">Fresh fish tacos and tropical salsas with a view of the Waimea countryside. A casual, colorful stop before or after canyon hikes.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=9643+Kaumualii+Hwy,+Waimea,+HI+96796" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            9643 Kaumualii Hwy, Waimea, HI 96796
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Fish Tacos • Casual</span>
                             <span class="price">$</span>
@@ -744,7 +1139,47 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🏞️</div>
+                    <div class="card-image" role="img" aria-label="Shrimp plate">🦐</div>
+                    <div class="card-body">
+                        <span class="card-badge badge-food">Food</span>
+                        <h3 class="card-title">Shrimp Station</h3>
+                        <div class="stars">
+                            <span class="star-rating">★ 4.4</span>
+                            <span class="star-count">(980 reviews)</span>
+                        </div>
+                        <p class="card-desc">Garlic shrimp plates and coconut shrimp served from a roadside stand. Picnic tables and a laid-back vibe make it a perfect lunch stop.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=9652+Kaumualii+Hwy,+Waimea,+HI+96796" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            9652 Kaumualii Hwy, Waimea, HI 96796
+                        </a>
+                        <div class="card-footer">
+                            <span class="tag">Shrimp • Roadside</span>
+                            <span class="price">$</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" role="img" aria-label="Shave ice">🍧</div>
+                    <div class="card-body">
+                        <span class="card-badge badge-food">Food</span>
+                        <h3 class="card-title">JoJo's Shave Ice</h3>
+                        <div class="stars">
+                            <span class="star-rating">★ 4.5</span>
+                            <span class="star-count">(1,100 reviews)</span>
+                        </div>
+                        <p class="card-desc">Massive shave ice portions with dozens of flavor combos. The "Rainbow" and "Tiger's Blood" are local favorites after a hot canyon hike.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=9734+Kaumualii+Hwy,+Waimea,+HI+96796" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            9734 Kaumualii Hwy, Waimea, HI 96796
+                        </a>
+                        <div class="card-footer">
+                            <span class="tag">Shave Ice • Dessert</span>
+                            <span class="price">$</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-image" role="img" aria-label="Canyon">🏞️</div>
                     <div class="card-body">
                         <span class="card-badge badge-activity">Activity</span>
                         <h3 class="card-title">Waimea Canyon State Park</h3>
@@ -753,6 +1188,10 @@
                             <span class="star-count">(5,600+ reviews)</span>
                         </div>
                         <p class="card-desc">The "Grand Canyon of the Pacific." Ten miles long and 3,000 feet deep with red earth walls and cascading waterfalls. Multiple lookouts along Hwy 550.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Waimea+Canyon+State+Park,+Waimea,+HI+96796" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Waimea Canyon Dr, Waimea, HI 96796
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Hike • Lookouts • Views</span>
                             <span class="price">$5/vehicle</span>
@@ -760,7 +1199,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-image">🌲</div>
+                    <div class="card-image" role="img" aria-label="Forest">🌲</div>
                     <div class="card-body">
                         <span class="card-badge badge-activity">Activity</span>
                         <h3 class="card-title">Kōkeʻe State Park</h3>
@@ -769,6 +1208,10 @@
                             <span class="star-count">(2,400+ reviews)</span>
                         </div>
                         <p class="card-desc">High-elevation forests and the legendary Kalalau Lookout. Hike the Kukui Trail down into the canyon or camp among native birds.</p>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Kokee+State+Park,+Waimea,+HI+96796" target="_blank" rel="noopener noreferrer" class="address">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Kokee Rd, Waimea, HI 96796
+                        </a>
                         <div class="card-footer">
                             <span class="tag">Hike • Camp • Lookout</span>
                             <span class="price">Free</span>
@@ -781,8 +1224,8 @@
     </main>
 
     <footer>
-        <p>Made with <span class="heart">♥</span> for Kauai • Ratings aggregated from Google & Yelp</p>
-        <p style="margin-top: 0.5rem; font-size: 0.8rem;">Aloha nui loa</p>
+        <p>Made with <span class="heart" aria-hidden="true">♥</span> for Kauai • Ratings aggregated from Google & Yelp</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.7;">Aloha nui loa</p>
     </footer>
 
     <script>
@@ -790,8 +1233,10 @@
             // Update buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
                 if (btn.textContent.toLowerCase().includes(city) || (city === 'all' && btn.textContent.includes('All'))) {
                     btn.classList.add('active');
+                    btn.setAttribute('aria-selected', 'true');
                 }
             });
 
