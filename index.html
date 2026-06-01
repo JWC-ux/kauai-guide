@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNRIA | Elite TikTok LIVE Creator Network</title>
+    <style>
+        /* CSS Variables for Neon Jungle Theme */
+        :root {
+            --bg-dark: #060a07;
+            --bg-card: #0d1610;
+            --bg-input: #142218;
+            --text-light: #f4f4f4;
+            --text-muted: #a2b3a8;
+            --neon-green: #39ff14;
+            --neon-pink: #ff007f;
+            --neon-blue: #00f0ff;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+        }
+
+        span.highlight-green {
+            color: var(--neon-green);
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+        }
+
+        span.highlight-pink {
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(6, 10, 7, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+            z-index: 1000;
+            padding: 20px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-light);
+            text-shadow: 0 0 10px var(--neon-green);
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-green);
+        }
+
+        /* Layout Utilities */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 120px 0 80px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background: transparent;
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+            padding: 16px 35px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.15);
+            border-radius: 4px;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: var(--neon-green);
+            color: var(--bg-dark);
+            box-shadow: 0 0 25px rgba(57, 255, 20, 0.5);
+        }
+
+        .btn-pink {
+            color: var(--neon-pink);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.15);
+        }
+
+        .btn-pink:hover {
+            background: var(--neon-pink);
+            color: var(--text-light);
+            box-shadow: 0 0 25px rgba(255, 0, 127, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(rgba(6, 10, 7, 0.85), rgba(6, 10, 7, 0.95)), 
+                        url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+            padding-top: 100px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            text-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 850px;
+            margin: 0 auto 35px;
+            color: var(--text-light);
+        }
+
+        .urgency-banner {
+            margin-top: 35px;
+            display: inline-block;
+            background: rgba(255, 0, 127, 0.12);
+            border: 1px solid var(--neon-pink);
+            padding: 12px 25px;
+            border-radius: 4px;
+            color: var(--neon-pink);
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            animation: pulse 2.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 127, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(255, 0, 127, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 127, 0); }
+        }
+
+        /* Grid System */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 50px;
+            align-items: center;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            padding: 45px 30px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-top: 4px solid var(--neon-green);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4), 0 0 15px rgba(57, 255, 20, 0.1);
+            border-color: rgba(57, 255, 20, 0.4);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        /* Tech & Strategy Features */
+        .feature-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+        }
+
+        .feature-list li::before {
+            content: "🌴";
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+
+        /* Estimator Widget */
+        .estimator-container {
+            background: linear-gradient(145deg, #0d1610, #060a07);
+            border: 1px solid rgba(57, 255, 20, 0.3);
+            border-radius: 12px;
+            padding: 45px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        .slider-group {
+            margin-bottom: 35px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .range-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            background: #1a2e21;
+            height: 10px;
+            border-radius: 5px;
+            outline: none;
+            border: 1px solid rgba(57, 255, 20, 0.2);
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--neon-green);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--neon-green);
+            transition: transform 0.1s;
+        }
+
+        .range-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .results-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: rgba(0,0,0,0.4);
+            padding: 25px;
+            border-radius: 6px;
+            border-left: 4px solid var(--neon-pink);
+            margin-top: 25px;
+        }
+
+        .result-item text {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        .result-value.highlight {
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px rgba(255,0,127,0.4);
+        }
+
+        /* Ebook Showcase */
+        .ebook-card {
+            background: linear-gradient(135deg, var(--bg-card) 0%, #1a1016 100%);
+            border: 1px solid rgba(255, 0, 127, 0.2);
+            border-radius: 12px;
+            padding: 50px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .ebook-details h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+        }
+
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--neon-pink);
+            display: block;
+            margin: 20px 0;
+            text-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+        }
+
+        /* Roster Display */
+        .roster-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.02);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .roster-info {
+            padding: 30px;
+            text-align: left;
+        }
+
+        .roster-tag {
+            display: inline-block;
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 3px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* Application Form */
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 50px;
+            border-radius: 10px;
+            border: 1px solid rgba(57, 255, 20, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        .form-control {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px;
+            color: var(--text-light);
+            font-family: var(--font-main);
+            font-size: 1rem;
+            border-radius: 4px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--neon-green);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+        }
+
+        textarea.form-control {
+            height: 130px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: #030504;
+            padding: 80px 0 30px;
+            border-top: 2px solid var(--neon-green);
+            font-size: 0.95rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-brand h4 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px var(--neon-green);
+        }
+
+        .footer-links-col h5 {
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .footer-links-col ul {
+            list-style: none;
+        }
+
+        .footer-links-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links-col ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links-col ul li a:hover {
+            color: var(--neon-green);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            color: #55665c;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 3.2rem; }
+            .grid-2 { grid-template-columns: 1fr; gap: 40px; }
+            .ebook-card { flex-direction: column; text-align: center; padding: 35px; }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 { font-size: 2.4rem; }
+            .hero p { font-size: 1.1rem; }
+            .nav-links { display: none; } /* Simplified mobile handling */
+            .form-container, .estimator-container { padding: 25px; }
+            .results-box { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SYNRIA</div>
+            <div class="nav-links">
+                <a href="#value">Benefits</a>
+                <a href="#tech">Strategy</a>
+                <a href="#estimator">Earnings Calc</a>
+                <a href="#ebook">Playbook</a>
+                <a href="#roster">Roster</a>
+                <a href="#apply">Apply</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <div class="container">
+            <h1>Elevate Your Stream.<br><span class="highlight-green">Dominate the FYP.</span></h1>
+            <p>Welcome to SYNRIA. We don't just manage TikTok LIVE creators—we amplify them. Turn your passion into a powerhouse brand with elite growth blueprints, advanced stream gamification, and industry-leading payout structures.</p>
+            <a href="#apply" class="btn">Apply to the Network</a>
+            <br>
+            <div class="urgency-banner">
+                ⚡ May Recruitment Window: Only 2 to 4 roster spots remaining this month.
+            </div>
+        </div>
+    </header>
+
+    <!-- Value Proposition Section -->
+    <section class="section value-prop" id="value">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Ecosystem Where <span class="highlight-green">Creators Thrive</span></h2>
+                <p style="max-width: 700px; margin: 0 auto;">We eliminate backend operational headaches so you can focus entirely on executing world-class entertainment. From navigating strict platform compliance filters to optimization metrics, we stack the deck in your favor.</p>
+            </div>
+            
+            <div class="grid-3">
+                <div class="card">
+                    <span class="card-icon">🌴</span>
+                    <h3>Unbeatable 50/50 Payouts</h3>
+                    <p>Stop leaving substantial money on the table with predatory agencies. We operate on a completely transparent 50/50 backend ecosystem structure, engineered explicitly to maximize your direct operational scalability.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">⚡</span>
+                    <h3>Exclusive Network Campaigns</h3>
+                    <p>Gain unhindered access to high-visibility internal community events, private matching pools, and algorithmic network campaigns built specifically to fast-track your profile directly into the upper tiers of global LIVE rankings.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🛡️</span>
+                    <h3>Ironclad Platform Security</h3>
+                    <p>Instantly bypass unfair platform restrictions. Our dedicated account integrity managers handle real-time policy coordination, multi-account setup protection, static imagery compliance, and accelerated violation appeals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech & Strategy Section -->
+    <section class="section tech-strategy" id="tech">
+        <div class="container">
+            <div class="grid-2">
+                <div>
+                    <h2>Technical Innovation <br><span class="highlight-pink">Behind the Scenes</span></h2>
+                    <p style="margin-top: 20px;">Exceptional streams require exceptional tech infrastructure. SYNRIA provides custom hardware configurations and interactive psychological architectures designed to supercharge your broadcast engagement loop.</p>
+                    <ul class="feature-list">
+                        <li><strong>Bespoke OBS Overlays:</strong> Custom dynamic overlays optimized specifically for standard visual viewports to optimize visual focus.</li>
+                        <li><strong>180 BPM Audio Trigger Loops:</strong> Specially engineered hyperpop and high-tempo sound cues timed to trigger during high-gifting trains to foster adrenaline-fueled interactive participation.</li>
+                        <li><strong>Psychological Stream Gamification:</strong> Proven viewer milestones, sub-goals, and interactive mechanics that convert passive scrollers into dedicated core community gifters.</li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop" alt="Streaming Setup" style="width:100%; border-radius: 8px; border: 1px solid rgba(255,0,127,0.3); box-shadow: 0 0 20px rgba(255,0,127,0.15);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diamond Estimator Section -->
+    <section class="section estimator" id="estimator">
+        <div class="container">
+            <div class="grid-2">
+                <div>
+                    <h2>Interactive <br><span class="highlight-green">Earnings Calculator</span></h2>
+                    <p>Curious about how much you actually take home? TikTok LIVE operates on a Diamond economy. Adjust the sliders to estimate gross live gift revenues, and see the financial projection with SYNRIA's optimized network support model applied.</p>
+                    <p style="font-size: 0.9rem; font-style: italic;">Note: Calculations assume the standard platform conversion rate where 1 Diamond equals $0.005 USD post-TikTok base platform share.</p>
+                </div>
+                
+                <div class="estimator-container">
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>Weekly Live Diamonds</span>
+                            <span id="diamond-val" class="highlight-green">50,000</span>
+                        </div>
+                        <input type="range" min="1000" max="1000000" step="1000" value="50000" class="range-slider" id="diamond-slider">
+                    </div>
+                    
+                    <div class="results-box">
+                        <div class="result-item">
+                            <text>Estimated Gross USD Value</text>
+                            <div class="result-value" id="gross-usd">$250.00</div>
+                        </div>
+                        <div class="result-item">
+                            <text>Your Net 50% SYNRIA Take-Home</text>
+                            <div class="result-value highlight" id="net-usd">$125.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Digital Resources Section -->
+    <section class="section ebook" id="ebook">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Educational <span class="highlight-pink">Playbook</span></h2>
+                <p>Not ready to fully commit to an active network roster spot? Start mastering the underlying algorithm mechanics on your own terms tonight.</p>
+            </div>
+            
+            <div class="ebook-card">
+                <div style="flex: 1;">
+                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=600&auto=format&fit=crop" alt="Ebook Blueprint" style="width: 100%; max-width: 280px; border-radius: 6px; border: 1px solid rgba(255,0,127,0.4); box-shadow: 0 0 20px rgba(255,0,127,0.2);">
+                </div>
+                <div class="ebook-details" style="flex: 2; text-align: left;">
+                    <div class="roster-tag" style="background:rgba(255,0,127,0.1); color:var(--neon-pink); border-color:var(--neon-pink);">Digital Guide</div>
+                    <h3>Mastering TikTok LIVE in 2026</h3>
+                    <p>The definitive 20-page strategic master blueprint meticulously breaking down immediate operational optimization. Discover how to precisely bypass shadowbans, structure high-conversion gamified stream flows, utilize auditory cues, and retain high-tier gifters permanently.</p>
+                    <span class="price-tag">$1.99</span>
+                    <a href="#apply" class="btn btn-pink">Secure Copy Instantly</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roster Section -->
+    <section class="section roster" id="roster">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Network <span class="highlight-blue">Roster Elite</span></h2>
+                <p>We provide completely hyper-customized optimization vectors matching your specific streaming modality.</p>
+            </div>
+            
+            <div class="grid-3">
+                <div class="roster-card">
+                    <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?q=80&w=400&auto=format&fit=crop" alt="Steve & Marylou" style="width:100%; height:250px; object-fit: cover;">
+                    <div class="roster-info">
+                        <div class="roster-tag">Gaming Specialists</div>
+                        <h3>Steve & Marylou</h3>
+                        <p>High-tier elite competitive gamers focused entirely on pristine gameplay mechanics, immersive commentary, and audience community engagement, completely independent of external live battles or matches.</p>
+                    </div>
+                </div>
+                <div class="roster-card">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop" alt="Creator Profile" style="width:100%; height:250px; object-fit: cover;">
+                    <div class="roster-info">
+                        <div class="roster-tag">Interactive Host</div>
+                        <h3>Aria Cross</h3>
+                        <p>A powerhouse live performer leveraging customized OBS layouts and 180 BPM audio gift tracking protocols to execute record-breaking community milestone events week after week.</p>
+                    </div>
+                </div>
+                <div class="roster-card">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" alt="Creator Profile" style="width:100%; height:250px; object-fit: cover;">
+                    <div class="roster-info">
+                        <div class="roster-tag">PK Combat Champion</div>
+                        <h3>Kai Zen</h3>
+                        <p>A premier high-octane competitive matching specialist utilizing our core internal platform network connections to dominate consecutive regional global tournament events.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form Section -->
+    <section class="section apply" id="apply">
+        <div class="container">
+            <div class="section-header">
+                <h2>Apply For <span class="highlight-green">Network Membership</span></h2>
+                <p>Ready to explode your stream? Fill out the secure operational verification portal below. Our network optimization team conducts vetting evaluations within 48 business hours.</p>
+            </div>
+            
+            <div class="form-container">
+                <form id="recruitmentForm" onsubmit="event.preventDefault(); alert('Application submitted successfully to SYNRIA Management!');">
+                    <div class="form-group">
+                        <label for="fullName">Legal Full Name</label>
+                        <input type="text" id="fullName" class="form-control" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tiktokHandle">Primary TikTok Handle</label>
+                        <input type="text" id="tiktokHandle" class="form-control" placeholder="@username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailAddr">Secure Contact Email Address</label>
+                        <input type="email" id="emailAddr" class="form-control" placeholder="john@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="avgViewers">Current Average Concurrent Live Viewers</label>
+                        <select id="avgViewers" class="form-control" required>
+                            <option value="" disabled selected>Select your tier...</option>
+                            <option value="0-50">0 - 50 concurrent viewers</option>
+                            <option value="50-200">50 - 200 concurrent viewers</option>
+                            <option value="200-1000">200 - 1,000 concurrent viewers</option>
+                            <option value="1000+">1,000+ concurrent viewers</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="streamStyle">Primary Content/Streaming Modality Style</label>
+                        <select id="streamStyle" class="form-control" required>
+                            <option value="" disabled selected>Select your style...</option>
+                            <option value="gaming">Pure Gameplay / Gaming (No Battles/Matches)</option>
+                            <option value="pk">Competitive Live Battles / PK Matches</option>
+                            <option value="talk">Chit-Chat / Interactive Hosting / ASMR</option>
+                            <option value="other">Creative Arts / Music / Performance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="coverLetter">Briefly describe your current long-term goals</label>
+                        <textarea id="coverLetter" class="form-control" placeholder="Tell us about your broadcast background, your community size, or why you want to transition your stream ecosystem into SYNRIA..."></textarea>
+                    </div>
+                    <div style="text-align: center; margin-top: 35px;">
+                        <button type="submit" class="btn" style="width: 100%;">Transmit Direct Secure Application</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Area -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h4>SYNRIA</h4>
+                    <p>The premier modern digital infrastructure system elevating premium live performers globally into sustainable, high-revenue brand legacies.</p>
+                </div>
+                <div class="footer-links-col">
+                    <h5>Ecosystem Hubs</h5>
+                    <ul>
+                        <li><a href="https://www.tiktok.com/@synria.creators" target="_blank">@synria.creators</a></li>
+                        <li><a href="https://www.tiktok.com/@soulfly1222" target="_blank">@soulfly1222</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-col">
+                    <h5>Navigation Portal</h5>
+                    <ul>
+                        <li><a href="#home">Home Base</a></li>
+                        <li><a href="#value">Network Benefits</a></li>
+                        <li><a href="#tech">Strategic Technology</a></li>
+                        <li><a href="#estimator">Diamond Estimator</a></li>
+                        <li><a href="#ebook">E-Book Guide</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div>&copy; 2026 SYNRIA Creator Network Ecosystem. All rights reserved globally.</div>
+                <div>System Status: Operational | Compliance Version: 2026.1</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic for the Calculator -->
+    <script>
+        const slider = document.getElementById('diamond-slider');
+        const diamondValDisplay = document.getElementById('diamond-val');
+        const grossUsdDisplay = document.getElementById('gross-usd');
+        const netUsdDisplay = document.getElementById('net-usd');
+
+        // TikTok Diamond baseline: 1 diamond = $0.005 USD to the creator payout pool
+        const DIAMOND_VALUE_BASE = 0.005; 
+        const CREATOR_SPLIT_RATE = 0.50; // SYNRIA 50/50 take-home split
+
+        function calculateEarnings(diamonds) {
+            const gross = diamonds * DIAMOND_VALUE_BASE;
+            const net = gross * CREATOR_SPLIT_RATE;
+
+            // Format numbers to clean currency layout
+            diamondValDisplay.textContent = Number(diamonds).toLocaleString();
+            grossUsdDisplay.textContent = '$' + gross.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            netUsdDisplay.textContent = '$' + net.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+
+        // Initialize event listening vectors
+        slider.addEventListener('input', function(e) {
+            calculateEarnings(e.target.value);
+        });
+
+        // Run initial configuration state load
+        calculateEarnings(slider.value);
+    </script>
+</body>
+</html>
